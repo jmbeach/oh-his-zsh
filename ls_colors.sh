@@ -211,3 +211,6 @@ for color_setting in $MY_LS_COLORS; do
 done
 
 export LS_COLORS="$full_ls_colors"
+
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
