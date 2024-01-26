@@ -1,16 +1,19 @@
 function join() {
-	input=$(cat)
 	seperator=$1
 	if [ -z "$seperator" ]; then
 		seperator=" "
 	fi
 
-	to_replace=""
-	length=${#seperator}
-	for ((i = 0; i < length; i++)); do
-		to_replace="${to_replace}."
-	done
+	local first=true
+	local line
 
-	echo $input | awk '{print}' ORS="$seperator" | sed '$s/'"$to_replace"'$//'
+	while IFS= read -r line; do
+		if [ "$first" = true ]; then
+			first=false
+			printf %s "$line"
+		else
+			printf %s "$seperator$line"
+		fi
+	done
 	echo ""
 }
