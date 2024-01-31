@@ -13,6 +13,9 @@ function set-java-version() {
 		echo "JDK not found: $new_version"
 	else
 		export JAVA_HOME=$new_home
+		echo $new_home >~/.current-java-version
+		echo "JAVA_HOME $new_home written to ~/.current-java-version."
+		echo "You may need to refresh your terminal. Ensure you have 'export JAVA_HOME=\$(cat ~/.current-java-version)' in your .zshrc"
 	fi
 }
 _java_version_completer() {
