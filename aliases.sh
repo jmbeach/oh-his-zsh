@@ -9,11 +9,11 @@ function rm() {
 }
 
 function mkdir() {
-	builtin mkdir "$@"
+	command mkdir "$@"
 	ls
 }
 
 function mv() {
-	builtin mv "$@"
+	command mv "$@"
 	ls
 }
