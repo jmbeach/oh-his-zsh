@@ -4,7 +4,7 @@ function cd() {
 }
 
 function rm() {
-	builtin rm "$@"
+	command rm "$@"
 	ls
 }
 
