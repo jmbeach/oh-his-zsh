@@ -17,3 +17,7 @@ function mv() {
 	command mv "$@"
 	ls
 }
+
+function ls() {
+	COLUMNS=3 command ls -C --color=auto
+}
