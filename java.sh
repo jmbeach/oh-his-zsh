@@ -40,3 +40,5 @@ _java_version_completer() {
 }
 
 complete -F _java_version_completer set-java-version
+
+export PATH=$PATH:/opt/gradle/gradle-8.5/bin
