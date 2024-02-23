@@ -19,5 +19,11 @@ function mv() {
 }
 
 function ls() {
-	COLUMNS=3 command ls -C --color=auto
+	if [[ $(uname -s) == "Darwin" ]]; then
+		LC_COLLATE=en_US.utf8 gls -C -w 3 --color=auto \
+			--group-directories-first
+	else
+		LC_COLLATE=en_US.utf8 ls -C -w 3 --color=auto \
+			--group-directories-first
+	fi
 }
