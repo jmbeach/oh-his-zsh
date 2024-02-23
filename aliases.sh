@@ -23,7 +23,7 @@ function ls() {
 		LC_COLLATE=en_US.utf8 gls -C -w 3 --color=auto \
 			--group-directories-first
 	else
-		LC_COLLATE=en_US.utf8 ls -C -w 3 --color=auto \
+		LC_COLLATE=en_US.utf8 command ls -C -w 3 --color=auto \
 			--group-directories-first
 	fi
 }
