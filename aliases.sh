@@ -30,3 +30,12 @@ function ls() {
 	fi
 }
 
+function say() {
+	if uname -r | grep -qE "(Microsoft|WSL)"; then
+		local text=$(echo $1 | sed "s/'/\''/")
+		powershell.exe -NoProfile -Command \
+			"Add-Type -AssemblyName System.speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak('$text')"
+	else
+		command say "$@"
+	fi
+}
