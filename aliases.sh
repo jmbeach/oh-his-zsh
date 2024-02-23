@@ -21,9 +21,12 @@ function mv() {
 function ls() {
 	if [[ $(uname -s) == "Darwin" ]]; then
 		LC_COLLATE=en_US.utf8 gls -C -w 3 --color=auto \
-			--group-directories-first
+			--group-directories-first \
+			"$@"
 	else
 		LC_COLLATE=en_US.utf8 command ls -C -w 3 --color=auto \
-			--group-directories-first
+			--group-directories-first \
+			"$@"
 	fi
 }
+
