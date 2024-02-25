@@ -30,6 +30,14 @@ function ls() {
 	fi
 }
 
+function fd() {
+	if [[ $(uname -s) == "Darwin" ]]; then
+		command fd "$@"
+	else
+		fdfind "$@"
+	fi
+}
+
 function say() {
 	if uname -r | grep -qE "(Microsoft|WSL)"; then
 		local text=$(echo $1 | sed "s/'/\''/")
