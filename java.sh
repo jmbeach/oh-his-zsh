@@ -42,3 +42,4 @@ _java_version_completer() {
 complete -F _java_version_completer set-java-version
 
 export PATH=$PATH:/opt/gradle/gradle-8.5/bin
+export PATH=$PATH:/opt/maven/apache-maven-3.9.6/bin
