@@ -64,3 +64,22 @@ function bindable-ls() {
     zle accept-line
 }
 zle -N bindable-ls
+
+function cat-man() {
+    man "$1" | col -b | cat
+}
+
+alias clip='pbcopy'
+alias copy='pbcopy'
+
+# quiet find
+function qfind() {
+    find $@ 2>/dev/null
+}
+
+# quiet rip grep
+function qrg() {
+    rg $@ 2>/dev/null
+}
+
+alias cat='bat'
