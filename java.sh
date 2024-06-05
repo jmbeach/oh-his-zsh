@@ -9,23 +9,20 @@ function list-java-versions() {
 function set-java-version() {
 	new_version=$1
 	if [ -z "$new_version" ]; then
-		echo "You must choose the version you wish to change to"
+		echo "You must choose the version you wish to change to" >&2
+		return 1
+	fi
+	new_home=$(get-java-path-from-name $new_version)
+	if [ $? -ne 0 ]; then
 		return 1
 	fi
 	if [[ $(uname -s) == "Darwin" ]]; then
-		new_home=$(/usr/libexec/java_home -v $new_version)
-		if [ -z "$new_home" ]; then
-			echo "JDK not found: $new_version"
-		else
-			export JAVA_HOME=$new_home
-			echo $new_home >~/.current-java-version
-			echo "JAVA_HOME $new_home written to ~/.current-java-version."
-			echo "You may need to refresh your terminal. Ensure you have 'export JAVA_HOME=\$(cat ~/.current-java-version)' in your .zshrc"
-		fi
+		export JAVA_HOME=$new_home
+		echo $new_home >~/.current-java-version
+		echo "JAVA_HOME $new_home written to ~/.current-java-version."
+		echo "You may need to refresh your terminal. Ensure you have 'export JAVA_HOME=\$(cat ~/.current-java-version)' in your .zshrc"
 	else
-		local java_versions=$(update-alternatives --list java)
-		local choice=$(echo $java_versions | grep -m 1 $new_version)
-		sudo update-alternatives --set java $choice
+		sudo update-alternatives --set java $new_home
 	fi
 }
 
@@ -38,8 +35,27 @@ _java_version_completer() {
 
 	COMPREPLY=($(compgen -W "${java_versions}" -- "${COMP_WORDS[COMP_CWORD]}"))
 }
-
 complete -F _java_version_completer set-java-version
+
+get-java-path-from-name() {
+	new_version=$1
+	if [[ $(uname -s) == "Darwin" ]]; then
+		new_home=$(/usr/libexec/java_home -v $new_version)
+		if [ -z "$new_home" ]; then
+			echo "JDK not found: $new_version" >&2
+		else
+			echo $new_home
+		fi
+	else
+		local java_versions=$(update-alternatives --list java)
+		local choice=$(echo $java_versions | grep -m 1 $new_version)
+		echo $choice
+	fi
+}
+
+function java18() {
+	eval "$(get-java-path-from-name 18)/bin/java" "$@"
+}
 
 export PATH=$PATH:/opt/gradle/gradle-8.5/bin
 export PATH=$PATH:/opt/maven/apache-maven-3.9.6/bin
