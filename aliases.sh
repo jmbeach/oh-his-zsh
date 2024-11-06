@@ -59,3 +59,12 @@ function qrg() {
 alias cat='bat'
 alias ls='eza -l --no-user'
 alias sed='gsed'
+
+function mvn() {
+    command mvn $@ | tee ~/code/logs/maven/$(date '+%Y-%m-%d')_$(date '+%H-%M-%S').log
+    if [ $? -eq 0 ]; then
+        say Maven build successful
+    else
+        say Maven build failed
+    fi
+}
